@@ -42,7 +42,7 @@ function Space() {
             for(i = 0; i < newPlanets.length; i++) {
                 newPlanets[i].calcPower(i + this.sector * 10, this.calcDifficulty());
             }
-            this.planets.push(newPlanets);
+            this.planets = this.planets.concat(newPlanets);
         }
     };
 }
