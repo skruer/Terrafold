@@ -5,10 +5,17 @@ function Space() {
     this.tick = function() {
         for(var i = 0; i < this.planets.length; i++) {
             this.planets[i].tick();
+            if(this.planets[i].isBoss && !this.planets[i].alive())
+            {
+                this.sector++;
+                this.newLevel();
+                this.planets[i].isBoss = false;
+            }
         }
         for(i = 0; i < this.ships.length; i++) {
             this.ships[i].tick();
         }
+        this.planets = this.planets.filter(function(value, index, arr) { return !value.empty() })
     };
 
     this.spawnShip = function(ship, y) {
@@ -18,7 +25,7 @@ function Space() {
     };
 
     this.calcDifficulty = function() {
-        return 1; //based on num completed sectors ?
+        return this.sector + 1; //should this be more complicated ?
     };
 
     this.newLevel = function() {
@@ -33,4 +40,3 @@ function Space() {
         }
     };
 }
-
