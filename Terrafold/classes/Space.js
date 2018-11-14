@@ -32,17 +32,19 @@ function Space() {
         if(this.planets.length <= 30)
         {
             this.sector++;
-            newPlanets = [];
             for(var i = 0; i < 10; i++) {
-                newPlanets.push(new Planet());
+                // If new planets aren't added to this array, they collide. Refactor?
+                this.planets.push(new Planet());
             }
+            newPlanets = this.planets.slice(this.planets.length - 10, this.planets.length);
             sortArrayObjectsByValue(newPlanets, "x");
-            newPlanets[newPlanets.length - 1].isBoss = true; //rightmost planet
+            newPlanets[newPlanets.length - 1].isBoss = true; //rightmost new planet
 
-            for(i = 0; i < newPlanets.length; i++) {
-                newPlanets[i].calcPower(i + this.sector * 10, this.calcDifficulty());
+            // Reinsert the new planets into the array
+            for(i = this.planets.length - 10, j = 0; i < newPlanets.length; i++, j++) {
+                this.planets[i] = newPlanets[j];
+                this.planets[i].calcPower(i + this.sector * 10, this.calcDifficulty());
             }
-            this.planets = this.planets.concat(newPlanets);
         }
     };
 }
