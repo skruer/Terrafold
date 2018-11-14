@@ -129,8 +129,8 @@ function Game() {
         if(toBuy <= 0) {
             return;
         }
-        this.oxygen -= 3e7;
-        this.science -= 1.5e7;
+        this.oxygen -= 3e7 * toBuy;
+        this.science -= 1.5e7 * toBuy;
         this.spaceDock.addBattleship(toBuy);
         view.update();
     };
